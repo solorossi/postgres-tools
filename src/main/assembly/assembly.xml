@@ -1,0 +1,40 @@
+<assembly xmlns="http://maven.apache.org/ASSEMBLY/2.2.0"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/ASSEMBLY/2.2.0 https://maven.apache.org/xsd/assembly-2.2.0.xsd">
+    <id>bin</id>
+    <formats>
+        <format>tar.gz</format>
+        <format>zip</format>
+    </formats>
+
+    <fileSets>
+        <fileSet>
+            <!-- Source location for scripts -->
+            <directory>src/main/scripts</directory>
+
+            <!-- Target destination inside the archive -->
+            <outputDirectory>bin</outputDirectory>
+
+            <!-- Ensures scripts can actually be run on Mac -->
+            <fileMode>0755</fileMode>
+            <lineEnding>unix</lineEnding>
+            <includes>
+                <include>*.sh</include>
+            </includes>
+        </fileSet>
+        <fileSet>
+            <!-- Source location for configuration -->
+            <directory>src/main/configuration</directory>
+
+            <!-- Target destination inside the archive -->
+            <outputDirectory>conf</outputDirectory>
+
+            <!-- Ensures scripts can actually be run on Mac -->
+            <fileMode>0755</fileMode>
+            <lineEnding>unix</lineEnding>
+            <includes>
+                <include>*.conf</include>
+            </includes>
+        </fileSet>
+    </fileSets>
+</assembly>
