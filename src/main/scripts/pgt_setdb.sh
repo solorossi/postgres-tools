@@ -5,17 +5,17 @@
 # See LICENSE file in the project root for full license information.
 
 # Ensure the user's configuration directory exists.
-CONF_DIR="$HOME/.pgt/conf"
-mkdir -p "${CONF_DIR}"
+conf_dir="$HOME/pgt/conf"
+mkdir -p "${conf_dir}"
 
 # Declare the configuration file names.
-DB_CONF="${CONF_DIR}/db.conf"
-DBS_CONF="${CONF_DIR}/dbs.conf"
+db_conf="${conf_dir}/db.conf"
+dbs_conf="${conf_dir}/dbs.conf"
 
 # If the file containing multiple, possible database names exists, choose from it.
-if [ -f "${CONF_DIR}/dbs.conf" ]; then
+if [ -f "${conf_dir}/dbs.conf" ]; then
     PS3="Select the database / owner name (or 'q' to quit): "
-    select choice in $(cat "${DBS_CONF}"); do
+    select choice in $(cat "${dbs_conf}"); do
         if [ "$REPLY" = "q" ]; then
             echo "Exiting."
             break
@@ -23,8 +23,8 @@ if [ -f "${CONF_DIR}/dbs.conf" ]; then
 
         # Valid choice?
         if [ -n "$choice" ]; then
-            echo "DATABASE_NAME=${choice}" > "$DB_CONF"
-            echo "OWNER_NAME=${choice}" >> "$DB_CONF"
+            echo "DATABASE_NAME=${choice}" > "$db_conf"
+            echo "OWNER_NAME=${choice}" >> "$db_conf"
             echo "Done."
             break
         else
@@ -33,8 +33,12 @@ if [ -f "${CONF_DIR}/dbs.conf" ]; then
     done
 else
     # Otherwise, prompt for a value.
-    read -rp "Enter the database name: " choice
-    echo "DATABASE_NAME=${choice}" > "$DB_CONF"
-    echo "OWNER_NAME=${choice}" >> "$DB_CONF"
+    choice=""
+    while [ -z "$choice" ]; do
+        read -rp "Enter the database name: " choice
+        choice=$(echo "$choice" | xargs)
+    done
+    echo "DATABASE_NAME=${choice}" > "$db_conf"
+    echo "OWNER_NAME=${choice}" >> "$db_conf"
     echo "Done."
 fi

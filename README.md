@@ -66,6 +66,7 @@ export PATH="$PG_BIN:$PATH"
 - todo
 
 ## Running Postgres Tools
+- todo
 
 ## TODO
 - Allow the database owner / user name to be different than the database name.
