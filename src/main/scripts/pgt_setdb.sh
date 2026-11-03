@@ -4,6 +4,11 @@
 # Licensed under the Apache License.
 # See LICENSE file in the project root for full license information.
 
+# Log informational messages
+log_info() {
+    echo -e "[\033[0;34mINFO\033[0m] $(date '+%Y-%m-%d %H:%M:%S') - $1"
+}
+
 # Ensure the user's configuration directory exists.
 conf_dir="$HOME/pgt/conf"
 mkdir -p "${conf_dir}"
@@ -17,7 +22,7 @@ if [ -f "${conf_dir}/dbs.conf" ]; then
     PS3="Select the database / owner name (or 'q' to quit): "
     select choice in $(cat "${dbs_conf}"); do
         if [ "$REPLY" = "q" ]; then
-            echo "Exiting."
+            log_info "Exiting."
             break
         fi
 
@@ -25,7 +30,7 @@ if [ -f "${conf_dir}/dbs.conf" ]; then
         if [ -n "$choice" ]; then
             echo "DATABASE_NAME=${choice}" > "$db_conf"
             echo "OWNER_NAME=${choice}" >> "$db_conf"
-            echo "Done."
+            log_info "Done."
             break
         else
             echo "Invalid choice. Please pick a number from the menu."
@@ -40,5 +45,7 @@ else
     done
     echo "DATABASE_NAME=${choice}" > "$db_conf"
     echo "OWNER_NAME=${choice}" >> "$db_conf"
-    echo "Done."
+    log_info "Done."
 fi
+
+exit 0

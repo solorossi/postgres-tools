@@ -15,9 +15,9 @@ fi
 source "$common_lib"
 
 # Drop and recreate the database.
-echo "Dropping and recreating database ${DATABASE_NAME}..."
+log_info "Dropping and recreating database ${DATABASE_NAME}..."
 $DROPDB "${DATABASE_NAME}"
 $CREATEDB -O "${OWNER_NAME}" "${DATABASE_NAME}"
 
-echo "Done."
+log_info "Done."
 exit 0

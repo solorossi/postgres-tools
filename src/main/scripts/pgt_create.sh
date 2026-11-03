@@ -15,11 +15,11 @@ fi
 source "$common_lib"
 
 # Create the owner / user and database.
-echo "Creating owner / user ${OWNER_NAME}..."
+log_info "Creating owner / user ${OWNER_NAME}..."
 $CREATEUSER -P -d "${OWNER_NAME}"
 
-echo "Creating database ${DATABASE_NAME}..."
+log_info "Creating database ${DATABASE_NAME}..."
 $CREATEDB -O "${OWNER_NAME}" "${DATABASE_NAME}"
 
-echo "Done."
+log_info "Done."
 exit 0
