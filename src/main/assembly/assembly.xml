@@ -22,19 +22,5 @@
                 <include>*.sh</include>
             </includes>
         </fileSet>
-        <fileSet>
-            <!-- Source location for configuration -->
-            <directory>src/main/configuration</directory>
-
-            <!-- Target destination inside the archive -->
-            <outputDirectory>conf</outputDirectory>
-
-            <!-- Ensures scripts can actually be run on Mac -->
-            <fileMode>0755</fileMode>
-            <lineEnding>unix</lineEnding>
-            <includes>
-                <include>*.conf</include>
-            </includes>
-        </fileSet>
     </fileSets>
 </assembly>
