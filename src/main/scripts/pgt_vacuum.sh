@@ -15,13 +15,7 @@ fi
 source "$common_lib"
 
 # Make sure Postgres is running.
-$PGISREADY -q
-postgres_status=$?
-
-if [ ${postgres_status} -ne 0 ]; then
-    log_error "Postgres is not running; please start it."
-    exit ${postgres_status}
-fi
+check_postgres
 
 # Default values.
 analyze_flag=""
@@ -67,5 +61,5 @@ exclusions="pg_catalog|pg_toast|information_schema"
 log_info "Running ${mode} on database ${DATABASE_NAME}..."
 $VACUUMDB ${vacuum_args} "${DATABASE_NAME}" 2>&1 | grep -E ${inclusions} | grep -v -E ${exclusions}
 
-log_info "Done."
+log_success "Done."
 exit 0

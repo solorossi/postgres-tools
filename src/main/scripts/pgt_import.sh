@@ -15,13 +15,7 @@ fi
 source "$common_lib"
 
 # Make sure Postgres is running.
-$PGISREADY -q
-postgres_status=$?
-
-if [ ${postgres_status} -ne 0 ]; then
-    log_error "Postgres is not running; please start it."
-    exit ${postgres_status}
-fi
+check_postgres
 
 schema="${IMPORT_DIR}/${DATABASE_NAME}.schema"
 data="${IMPORT_DIR}/${DATABASE_NAME}.data"
@@ -37,6 +31,6 @@ $PSQL -q -o "${schema}.out" "${DATABASE_NAME}" < "${schema}"
 log_info "Importing data for database ${DATABASE_NAME}..."
 $PSQL -q -o "${data}.out" "${DATABASE_NAME}" < "${data}"
 
-log_info "Done."
+log_success "Done."
 exit 0
 

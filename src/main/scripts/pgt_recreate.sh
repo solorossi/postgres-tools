@@ -14,10 +14,13 @@ fi
 # shellcheck disable=SC1090
 source "$common_lib"
 
+# Make sure Postgres is running.
+check_postgres
+
 # Drop and recreate the database.
 log_info "Dropping and recreating database ${DATABASE_NAME}..."
 $DROPDB "${DATABASE_NAME}"
 $CREATEDB -O "${OWNER_NAME}" "${DATABASE_NAME}"
 
-log_info "Done."
+log_success "Done."
 exit 0

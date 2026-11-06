@@ -4,6 +4,11 @@
 # Licensed under the Apache License.
 # See LICENSE file in the project root for full license information.
 
+# Log informational messages (green)
+log_success() {
+    echo -e "[\033[0;32m OK \033[0m] $(date '+%Y-%m-%d %H:%M:%S') - $1"
+}
+
 # Log informational messages
 log_info() {
     echo -e "[\033[0;34mINFO\033[0m] $(date '+%Y-%m-%d %H:%M:%S') - $1"
@@ -14,13 +19,13 @@ conf_dir="$HOME/pgt/conf"
 mkdir -p "${conf_dir}"
 
 # Declare the configuration file names.
-db_conf="${conf_dir}/db.conf"
-dbs_conf="${conf_dir}/dbs.conf"
+database_conf="${conf_dir}/database.conf"
+databases_conf="${conf_dir}/databases.conf"
 
 # If the file containing multiple, possible database names exists, choose from it.
-if [ -f "${conf_dir}/dbs.conf" ]; then
+if [ -f "${databases_conf}" ]; then
     PS3="Select the database / owner name (or 'q' to quit): "
-    select choice in $(cat "${dbs_conf}"); do
+    select choice in $(cat "${databases_conf}"); do
         if [ "$REPLY" = "q" ]; then
             log_info "Exiting."
             break
@@ -28,9 +33,10 @@ if [ -f "${conf_dir}/dbs.conf" ]; then
 
         # Valid choice?
         if [ -n "$choice" ]; then
-            echo "DATABASE_NAME=${choice}" > "$db_conf"
-            echo "OWNER_NAME=${choice}" >> "$db_conf"
-            log_info "Done."
+            log_info "Setting the current database name and owner name to ${choice}..."
+            echo "DATABASE_NAME=${choice}" > "${database_conf}"
+            echo "OWNER_NAME=${choice}" >> "${database_conf}"
+            log_success "Done."
             break
         else
             echo "Invalid choice. Please pick a number from the menu."
@@ -43,9 +49,10 @@ else
         read -rp "Enter the database name: " choice
         choice=$(echo "$choice" | xargs)
     done
-    echo "DATABASE_NAME=${choice}" > "$db_conf"
-    echo "OWNER_NAME=${choice}" >> "$db_conf"
-    log_info "Done."
+    log_info "Setting the current database name and owner name to ${choice}..."
+    echo "DATABASE_NAME=${choice}" > "${database_conf}"
+    echo "OWNER_NAME=${choice}" >> "${database_conf}"
+    log_success "Done."
 fi
 
 exit 0

@@ -17,5 +17,5 @@ source "$common_lib"
 log_info "Removing previously-extracted schema and data files..."
 rm -f "${IMPORT_DIR}/${DATABASE_NAME}".*
 
-log_info "Done."
+log_success "Done."
 exit 0

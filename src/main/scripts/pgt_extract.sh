@@ -40,5 +40,5 @@ log_info "Unzipping schema and data files..."
 gunzip "${IMPORT_DIR}/${DATABASE_NAME}.schema.gz"
 gunzip "${IMPORT_DIR}/${DATABASE_NAME}.data.gz"
 
-log_info "Done."
+log_success "Done."
 exit 0

@@ -15,13 +15,7 @@ fi
 source "$common_lib"
 
 # Make sure Postgres is running.
-$PGISREADY -q
-postgres_status=$?
-
-if [ ${postgres_status} -ne 0 ]; then
-    log_error "Postgres is not running; please start it."
-    exit ${postgres_status}
-fi
+check_postgres
 
 schema_file="${TEMP_DIR}/${DATABASE_NAME}.schema.gz"
 schema_log="${TEMP_DIR}/${DATABASE_NAME}.schema.log"
@@ -45,5 +39,5 @@ log_info "Creating the exported tar file as ${full_tar_file}..."
 tar -C "${TEMP_DIR}" -cf "${full_tar_file}" .
 rm -f "${TEMP_DIR}"/*
 
-log_info "Done."
+log_success "Done."
 exit 0
