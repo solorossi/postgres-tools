@@ -57,6 +57,7 @@ fi
 sql_file_base="$(basename "${sql_file%.*}")"
 
 # Prepare the output file names.
+mkdir -p "${output_dir}"
 output_file="${output_dir}/${sql_file_base}.out"
 log_file="${output_dir}/${sql_file_base}.log"
 error_file="${output_dir}/${sql_file_base}.err"
